@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction History</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            background: #f1f4f9;
+            color: #19264b;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header {
+            background: #192957;
+            color: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin-top: 0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            background: #243b80;
+            color: white;
+            display: inline-block;
+        }
+
+        .download-btn {
+            background: #198754;
+        }
+
+        .pdf-btn {
+            background: #dc3545;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        .table-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e9f0;
+            text-align: left;
+        }
+
+        th {
+            background: #edf1fa;
+        }
+
+        .churn {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .stay {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px;
+            color: #777;
+        }
+
+        @media(max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Prediction History</h1>
+        <p>View all previously predicted customer records.</p>
+    </div>
+
+    <div class="actions">
+
+        <a href="/" class="btn">Home</a>
+
+        <a href="/dashboard" class="btn">Dashboard</a>
+
+        <a href="{{ url_for('download_report') }}"
+           class="btn download-btn">
+            Download CSV Report
+        </a>
+
+        <a href="{{ url_for('download_pdf') }}"
+           class="btn pdf-btn">
+            Download PDF Report
+        </a>
+
+    </div>
+
+    <div class="table-box">
+
+        <h2>Customer Predictions</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer Data</th>
+                    <th>Prediction</th>
+                    <th>Churn Probability</th>
+                    <th>Stay Probability</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for record in records %}
+
+                <tr>
+
+                    <td>{{ record.id }}</td>
+
+                    <td>{{ record.customer_data }}</td>
+
+                    <td class="{{ 'churn' if record.prediction == 'Churn' else 'stay' }}">
+                        {{ record.prediction }}
+                    </td>
+
+                    <td>{{ record.churn_probability }}%</td>
+
+                    <td>{{ record.stay_probability }}%</td>
+
+                    <td>{{ record.created_at }}</td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="6" class="empty">
+                        No prediction history available.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
