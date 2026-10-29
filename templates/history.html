@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction History</title>
+    <title>Prediction History | Customer Churn Prediction</title>
 
     <style>
         * {
@@ -36,6 +36,16 @@
             margin-top: 0;
         }
 
+        .header p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .creator {
+            color: #93c5fd !important;
+            font-weight: bold;
+        }
+
         .actions {
             display: flex;
             gap: 12px;
@@ -50,10 +60,7 @@
             background: #243b80;
             color: white;
             display: inline-block;
-        }
-
-        .download-btn {
-            background: #198754;
+            font-weight: bold;
         }
 
         .pdf-btn {
@@ -103,9 +110,28 @@
             color: #777;
         }
 
+        .footer {
+            text-align: center;
+            margin-top: 22px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
         @media(max-width: 600px) {
             body {
                 padding: 12px;
+            }
+
+            .table-box {
+                padding: 12px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
             }
         }
     </style>
@@ -115,20 +141,28 @@
 
 <div class="container">
 
+    <!-- Header -->
     <div class="header">
         <h1>Prediction History</h1>
-        <p>View all previously predicted customer records.</p>
+
+        <p>
+            View all previously predicted customer records.
+        </p>
+
+        <p class="creator">
+            Created by Kishan
+        </p>
     </div>
 
+    <!-- Navigation and PDF Download -->
     <div class="actions">
 
-        <a href="/" class="btn">Home</a>
+        <a href="/" class="btn">
+            Home
+        </a>
 
-        <a href="/dashboard" class="btn">Dashboard</a>
-
-        <a href="{{ url_for('download_report') }}"
-           class="btn download-btn">
-            Download CSV Report
+        <a href="/dashboard" class="btn">
+            Dashboard
         </a>
 
         <a href="{{ url_for('download_pdf') }}"
@@ -138,6 +172,7 @@
 
     </div>
 
+    <!-- Prediction History Table -->
     <div class="table-box">
 
         <h2>Customer Predictions</h2>
@@ -191,6 +226,11 @@
 
         </table>
 
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        Customer Churn Prediction | Created by Kishan
     </div>
 
 </div>
